@@ -1,0 +1,25 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: telegram
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token: "tokeDoBot"
+        chat_id: "idDoChat"
+        parse_mode: "Markdown"
+        message: |
+          🚨 *Alerta*: {{ .CommonLabels.alertname }}
+
+          *Status:* Disparando
+          *Severidade:* `{{ .CommonLabels.severity }}`
+
+          *Descrição:*
+          {{ .CommonAnnotations.description }}
+
+          _Alertmanager_
+
+templates:
+  - '/etc/alertmanager/*.tmpl'

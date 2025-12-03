@@ -1,0 +1,18 @@
+{
+	"ulid": "01KBGC423HRBVEEVN9XXARV5FP",
+	"minTime": 1764655200000,
+	"maxTime": 1764662400000,
+	"stats": {
+		"numSamples": 246180,
+		"numFloatSamples": 246180,
+		"numSeries": 1974,
+		"numChunks": 3146
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01KBGC423HRBVEEVN9XXARV5FP"
+		]
+	},
+	"version": 1
+}

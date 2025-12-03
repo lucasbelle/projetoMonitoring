@@ -1,0 +1,30 @@
+groups:
+  - name: cpu-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 * sum(irate(node_cpu_seconds_total{mode!="idle"}[35s])) without(cpu, mode)/sum(irate(node_cpu_seconds_total[35s])) without(cpu, mode) > 80
+        for: 15s
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU acima de 80%"
+          description: "A CPU da instância {{ $labels.instance }} está acima de 80% por mais de 15 segundos."
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 80
+        for: 15s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Memória acima de 80%"
+          description: "A memória está acima de 80% por mais de 15 segundos."
+
+      - alert: HighErrorRate
+        expr: sum(rate(app_request_client_errors_total{endpoint!="/metrics"}[35s])) 
+              + sum(rate(app_request_server_errors_total{endpoint!="/metrics"}[35s])) > 50
+        for: 5s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Alta taxa de erros 4xx/5xx"
+          description: "O sistema está registrando mais de 50 erros por segundo (4xx + 5xx) nos últimos 5 segundos."
